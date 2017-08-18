@@ -1,0 +1,16 @@
+
+4    2      0  ==6
+2^2  2^1    2^0
+1    1      0
+
+
+remain
+6/(2^2) =1
+
+
+words[0] unsigned int
+
+words[1] unsigned int
+
+
+words[0] words[1]
