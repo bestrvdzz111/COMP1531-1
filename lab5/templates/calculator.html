@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Calculator</title>
+    </head>
+    <body>
+        {% if expr!="" %}
+            <p>{{expr}}</p>
+        {%else%}
+            <br><br>
+        {%endif%}
+
+        <form class="" action="" method="POST">
+            <button type="submit" name="button" value="1">1</button>
+            <button type="submit" name="button" value="2">2</button>
+            <button type="submit" name="button" value="3">3</button>
+            <button type="submit" name="button" value="C">C</button><br>
+
+            <button type="submit" name="button" value="4">4</button>
+            <button type="submit" name="button" value="5">5</button>
+            <button type="submit" name="button" value="6">6</button>
+            <button type="submit" name="button" value="+">+</button><br>
+
+            <button type="submit" name="button" value="7">7</button>
+            <button type="submit" name="button" value="8">8</button>
+            <button type="submit" name="button" value="9">9</button>
+            <button type="submit" name="button" value="-">-</button><br>
+
+            <button type="submit" name="button" value="0">0</button>
+            <button type="submit" name="button" value="*">*</button>
+            <button type="submit" name="button" value="/">/</button>
+            <button type="submit" name="button" value="=">=</button><br>
+
+            <button type="submit" name="button" value="(">(</button>
+            <button type="submit" name="button" value=")">)</button>
+            <button type="submit" name="button" value="sin(">sin</button>
+            <button type="submit" name="button" value="tan(">tan</button><br>
+
+            <button type="submit" name="button" value="cos(">cos</button>
+            <button type="submit" name="button" value="log(">log</button>
+            <button type="submit" name="button" value="sqrt(">sqrt</button>
+            <button type="submit" name="button" value="CE">CE</button><br>
+
+        </form>
+    </body>
+</html>
