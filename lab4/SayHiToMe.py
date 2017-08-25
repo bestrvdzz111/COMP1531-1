@@ -39,9 +39,20 @@ def show_input_box():
 
 def bubble_sort(list):
     sort_list = list.split(',')
+    sort_list = [int(x) for x in sort_list]
     iterations = []
-    for i in range(sort_list.length()):
-        pass
+    iterations.append(sort_list[:])
+    is_swap = 1
+    while is_swap:
+        is_swap = 0
+        for i in range(len(sort_list)-1):
+            if sort_list[i]>sort_list[i+1]:
+                tmp = sort_list[i]
+                sort_list[i]= sort_list[i+1]
+                sort_list[i+1] = tmp
+                is_swap += 1
+
+                iterations.append(sort_list[:])
     return iterations
 
 @app.route('/', methods=['GET', 'POST'])
@@ -74,7 +85,8 @@ def detail(zid):
 @app.route('/sort',methods =["POST","GET"])
 def sort():
     if request.method=="POST":
-        return render_template('sorted.html',iterations = bubble_sort(request.form[list]))
+
+        return render_template('sorted.html',iterations = bubble_sort(request.form["list"]))
 
     return render_template('sort.html',url=url_for('sort'))
 
