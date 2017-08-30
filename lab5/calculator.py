@@ -2,60 +2,78 @@ from flask import Flask,request,render_template,url_for,redirect
 from math import sqrt, sin, cos, tan, log
 app = Flask(__name__)
 
-# global varibale exist in during the web programme running
-expr = ""
-expr_L =[]
-expr_i = 0
+class expression():
+    """docstring for expression."""
+    def __init__(self):
+        super(expression, self).__init__()
+        self.expr_list = [""]
+        self.expr_index= 0
+    def append(self, string = ""):
+        # append the charater in this strign
+        self.expr_list[self.expr_index] += string
+    def pop(self):
+        # pop the last charater in this string
+        tmp_list = list(self.expr_list[self.expr_index])
+        tmp_list.pop()
+        self.expr_list[self.expr_index] = "".join(tmp_list)
+    def clear(self):
+        # clear all the stuff in this string
+        self.expr_list[self.expr_index]= ""
+    def get(self):
+        # get the value of this string
+        return self.expr_list[self.expr_index]
+    def next(self):
+        # try to get the next string
+        self.expr_index+=1
+        if self.expr_index>= len(self.expr_list):
+            # index oversize
+            self.expr_list.append("")
+        return self.get()
+    def prev(self):
+        self.expr_index-=1
+        if self.expr_index<=0:
+            # the index is undersize
+            self.expr_index = 0
+        # get back the value of this string
+        return self.get()
+    def evaluate(self):
+        # evaluate this expression
+        self.expr_list[self.expr_index] = str(eval(self.expr_list[self.expr_index]))
+        return self.get()
 
+# global varibale exist in during the web programme running
+expr = expression()
 
 
 @app.route('/',methods = ['GET','POST'])
 def index():
-    global expr
     if request.method == "POST":
         # not the first query
         btn = request.form['button']
         if btn == "C":
             # delete the last charater
-            expr_list = list(expr)
-            expr_list.pop()
-
-            expr = "".join(expr_list)
+            expr.pop()
         elif btn == "CE":
             # clear the expr record
-            expr = ""
+            expr.clear()
         elif btn == "=":
             # calculate the result
-            # expr = "expr="+expr
-            # exec("exec(expr)",globals()) # THIS LINE IS KEY!!!!!!
-            expr = str(eval(expr))
-            # = str(expr)
+            expr.evaluate()
 
         elif btn == ">":
-            global expr
-            global expr_L
-            global expr_i,expr
-            expr_L[expr_i] = expr
-            expr_i +=1
-            if expr_i > len(expr_L):
-                expr_L.append("")
-        # elif btn == "<":
-        #     global expr_L ,expr_i,expr
-        #
-        #     expr_L[expr_i] = expr
-        #     expr_i -=1
-        #     if expr_i <0:
-        #         expr_i = 0
-        #     expr = expr_L[expr_i]
+            expr.next()
+        elif btn == "<":
+            # try to write the data into the list
+            expr.prev()
         else:
             # general situation
-            expr += btn
+            expr.append(btn)
 
-        return render_template("calculator.html",expr=expr)
 
     # else:
-    # render_template the template
-    return render_template("calculator.html",expr=expr)
+    # render_template the template by the expression instance
+    return render_template("calculator.html",expr=expr.get())
+    # return render_template("calculator.html",expr=expr)
 
 
 
