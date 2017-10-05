@@ -1,3 +1,13 @@
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+
+# Add code to create a database engine that stores data in the local directory's library.db
+engine = create_engine('sqlite:///library.db')
+Base=declarative_base()
+
 class AuctionSystem(object):
 
     def __init__(self):
@@ -26,7 +36,12 @@ class AuctionSystem(object):
         for item in self._items:
             print(str(item))
 
-    def get_user(self, user_id):
+    def get_user(self, user_id = None):
+
+        if not user_id:
+            for user in self._users:
+                print (user)
+            return None
         for user in self._users:
             if user.id == user_id:
                 return str(user)
@@ -38,7 +53,7 @@ class AuctionSystem(object):
                 posts = user.posts
         for post in posts:
             print(post)
-                
+
     def search_user_bids(self, user_id):
         bids = []
         for user in self._users:
@@ -46,14 +61,14 @@ class AuctionSystem(object):
                 bids = user.bids
         for bid in bids:
             print(bid)
-    
+
     def search_item_bids(self, item_id):
         bids = []
         for item in self._items:
             if item.id == item_id:
                 bid = item.bid
         print(bid)
-    
+
 
 class Item(object):
 
@@ -156,7 +171,7 @@ class User(object):
     @property
     def posts(self):
         return self._posts
-    
+
     @property
     def bids(self):
         return self._bids
@@ -186,31 +201,34 @@ class Bid(object):
             string += (bid[0] + "  $" + str(bid[1]) + "\n")
         return string
 
-system = AuctionSystem()
-system.register_user("U001","Jack")
-system.register_user("U002","Tom")
-system.register_user("U003","Jason")
-system.register_user("U004","David")
-book = Book("I001","Agile Design","AnAgile Design Guide book", "U001", "Aarthi", "1996")
-electronic = Electronic("I002","Iphone7","latest iphone", "U003","220V", "Apple")
-furniture = Furniture("I003","Table","a nice table", "U003", "Wood", "5 years")
-system.post_item(book)
-system.post_item(electronic)
-system.post_item(furniture)
-system.make_bid("U002","I001", 800)
-system.make_bid("U003","I001", 900)
-system.make_bid("U003","I002", 200)
-system.make_bid("U004","I002", 220)
-system.make_bid("U001","I002", 250)
-system.make_bid("U004","I002", 300)
-system.make_bid("U001","I002", 350)
-system.make_bid("U004","I001", 920)
-system.make_bid("U004","I003", 40)
-system.make_bid("U002","I003", 50)
-system.make_bid("U001","I003", 60)
-system.make_bid("U002","I003", 80)
+
+if __name__ == '__main__':
+
+    system = AuctionSystem()
+    system.register_user("U001","Jack")
+    system.register_user("U002","Tom")
+    system.register_user("U003","Jason")
+    system.register_user("U004","David")
+    book = Book("I001","Agile Design","AnAgile Design Guide book", "U001", "Aarthi", "1996")
+    electronic = Electronic("I002","Iphone7","latest iphone", "U003","220V", "Apple")
+    furniture = Furniture("I003","Table","a nice table", "U003", "Wood", "5 years")
+    system.post_item(book)
+    system.post_item(electronic)
+    system.post_item(furniture)
+    system.make_bid("U002","I001", 800)
+    system.make_bid("U003","I001", 900)
+    system.make_bid("U003","I002", 200)
+    system.make_bid("U004","I002", 220)
+    system.make_bid("U001","I002", 250)
+    system.make_bid("U004","I002", 300)
+    system.make_bid("U001","I002", 350)
+    system.make_bid("U004","I001", 920)
+    system.make_bid("U004","I003", 40)
+    system.make_bid("U002","I003", 50)
+    system.make_bid("U001","I003", 60)
+    system.make_bid("U002","I003", 80)
 
 
-system.get_users()
-print("---------------------")
-system.get_items()
+    system.get_user()
+    print("---------------------")
+    system.get_items()
