@@ -82,9 +82,12 @@ if __name__ == '__main__':
     library.create_table()
 
     #Insert records into the table
-    # library.insert_book('001', 'Agile Design', 'Tom', '1997', 'textbook')
-    # library.insert_book('002', 'Cooking', 'Jack', '1998', 'cookbook')
-    # library.insert_book('003', 'Solid Principle', 'Tom', '2002', 'cookbook')
+    try:
+        library.insert_book('001', 'Agile Design', 'Tom', '1997', 'textbook')
+        library.insert_book('002', 'Cooking', 'Jack', '1998', 'cookbook')
+        library.insert_book('003', 'Solid Principle', 'Tom', '2002', 'cookbook')
+    except Exception as e:
+        raise
 
     # #Search the tables in the database
     library.search_book('Agile Design')
